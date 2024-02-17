@@ -1,6 +1,6 @@
 import java.util.concurrent.Semaphore;
  
-class Chopstick {
+public class Chopstick {
 	private int id;
 	public Chopstick(int id) { this.id = id; }
  	public int getId() { return id; }
@@ -8,7 +8,7 @@ class Chopstick {
 	// Constructor class for Semaphore that accepts the number permits
 	public Semaphore mutex = new Semaphore(1);
 	// We create a method that allows a philosopher to grab a chopstick
-	void grab()
+	public void grab()
 	{
 		try
 		{
@@ -22,14 +22,14 @@ class Chopstick {
 	}
 
 	// We create a method that allows a philosopher to release a chopstick
-	void release()
+	public void release()
 	{
 		// this releases an acquired permit and increases the number of available permits by one (chopstick)
 		mutex.release();
 	}
 
 	// Now we create a method that checks whether a chopstick is available or not
-	boolean isFree()
+	public boolean isFree()
 	{
 		// returns true if number of available permits is greater than 0, and false otherwise
 		return mutex.availablePermits() > 0;
