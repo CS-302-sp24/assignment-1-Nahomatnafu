@@ -24,23 +24,24 @@ class Philosopher extends Thread
     {
       // Philosopher thinking
       think();
+      System.out.println("Philospopher " + (number + 1) + " wants right chopstick.");
       // We'd like the philosopher to grab the chopsticks if they're both free
-      synchronized (left)
+      synchronized (right)
       {
-        left.grab();
-        System.out.println("Philospopher " + (number + 1) + " grabs left chopstick.");
-      }
-        synchronized (right)
+        right.grab();
+        System.out.println("Philosopher " + (number + 1) + " has right chopstick.");
+        synchronized (left)
         {
-          right.grab();
-          System.out.println("Philospopher " + (number + 1) + " grabs right chopstick.");
+          System.out.println("Philosopher " + (number + 1) + " wants left chopstick.");
+          left.grab();
+          System.out.println("Philosopher " + (number + 1) + " grabs left chopstick.");
           eat();
+          left.release();
+          System.out.println("Philosopher " + (number + 1) + " releases left chopstick.");
           right.release();
           System.out.println("Philosopher " + (number + 1) + " releases right chopstick.");
         }
-      
-
-      
+      } 
       // after eating the philosopher releases left and right chopsticks
       left.release();
       System.out.println("Philosopher " + (number + 1) + " releases left chopstick.");
