@@ -25,25 +25,33 @@ class Philosopher extends Thread
       // Philosopher thinking
       think();
       // We'd like the philosopher to grab the chopsticks if they're both free
-      left.grab();
-      System.out.println("Philospopher " + (number + 1) + " grabs left chopstick.");
-      right.grab();
-      System.out.println("Philospopher " + (number + 1) + " grabs right chopstick.");
+      synchronized (left)
+      {
+        left.grab();
+        System.out.println("Philospopher " + (number + 1) + " grabs left chopstick.");
+      }
+        synchronized (right)
+        {
+          right.grab();
+          System.out.println("Philospopher " + (number + 1) + " grabs right chopstick.");
+          eat();
+          right.release();
+          System.out.println("Philosopher " + (number + 1) + " releases right chopstick.");
+        }
+      
 
-      // whichever philospher is hungry starts eating
-      eat();
+      
       // after eating the philosopher releases left and right chopsticks
       left.release();
       System.out.println("Philosopher " + (number + 1) + " releases left chopstick.");
-      right.release();
-      System.out.println("Philosopher " + (number + 1) + " releases right chopstick.");
+      
     }
   }
       void think()
       {
         try 
         {
-          int sleepTime = ThreadLocalRandom.current().nextInt(0, tt+1); 
+          int sleepTime = ThreadLocalRandom.current().nextInt(0, tt+1); // thinks for this range amount
           System.out.println("Philosopher " + (number + 1) + " thinks for  "+ sleepTime + "ms");
           Thread.sleep(sleepTime);
         }
@@ -57,7 +65,7 @@ class Philosopher extends Thread
         try
         {
             // selecting a random number between 0 and 1000 representing sleep time in milliseconds
-            int sleepTime = ThreadLocalRandom.current().nextInt(0, 1000);
+            int sleepTime = ThreadLocalRandom.current().nextInt(0, et + 1); // eats for this range
             // Thread sleeping
             System.out.println("Philosopher " + (number + 1) + " eats for "+ sleepTime + "ms"); 
             Thread.sleep(sleepTime);

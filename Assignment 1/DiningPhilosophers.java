@@ -33,7 +33,7 @@ public class DiningPhilosophers {
         rightChopstick = chopsticks[(i+1) % np];
       }
 
-      philosophers[i] = new Philosopher(chopsticks[i], chopsticks[(i+1) % np], tt, et, nc);
+      philosophers[i] = new Philosopher(leftChopstick, rightChopstick, tt, et, nc);
       philosophers[i].start();
     }
 
